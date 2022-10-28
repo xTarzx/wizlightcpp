@@ -86,9 +86,8 @@ std::string Bulb::getWifiConfig()
     json_object_set_new(root, "method", json_string("getWifiConfig"));
 
     std::string msg = json_dumps(root, JSON_COMPACT);
-    LOG_D("Wiz reboot request %s to Wiz", msg.c_str());
+    LOG_D("Wiz getWifiConfig request %s to Wiz", msg.c_str());
     return m_sock.sendUDPCommand(msg, m_devIP, m_port, EMPTY_STRING);
-    // return parseResponse(resp); //Currently Wiz light response for Wifi Config unable to parse. Returning actual results
 }
 
 std::string Bulb::getSystemConfig()
@@ -97,7 +96,7 @@ std::string Bulb::getSystemConfig()
     json_object_set_new(root, "method", json_string("getSystemConfig"));
 
     std::string msg = json_dumps(root, JSON_COMPACT);
-    LOG_D("Wiz reboot request %s to Wiz", msg.c_str());
+    LOG_D("Wiz getSystemConfig request %s to Wiz", msg.c_str());
     auto resp = m_sock.sendUDPCommand(msg, m_devIP, m_port, EMPTY_STRING);
     return parseResponse(resp);
 }
@@ -108,7 +107,7 @@ std::string Bulb::getUserConfig()
     json_object_set_new(root, "method", json_string("getUserConfig"));
 
     std::string msg = json_dumps(root, JSON_COMPACT);
-    LOG_D("Wiz reboot request %s to Wiz", msg.c_str());
+    LOG_D("Wiz getUserConfig request %s to Wiz", msg.c_str());
     auto resp = m_sock.sendUDPCommand(msg, m_devIP, m_port, EMPTY_STRING);
     return parseResponse(resp);
 }
