@@ -25,7 +25,7 @@ private:
 
     enum WIZCMD {
         discover, on, off, status, reboot,
-        getdeviceinfo, getwificonfig, getuserconfig, getsystemconfig,
+        getdeviceinfo, getwificonfig, getuserconfig, getmodelconfig, getsystemconfig,
       	setbrightness, setrgbcolor, setspeed, setcolortemp, setscene
     };
     Bulb m_bulb;

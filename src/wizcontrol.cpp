@@ -51,6 +51,7 @@ void printUsage()
                 "  getdeviceinfo\t\t\tGet the bulb information\n"
                 "  getwificonfig\t\t\tGet the Wifi Configuration\n"
                 "  getuserconfig\t\t\tGet the User Configuration\n"
+                "  getmodelconfig\t\t\tGet the Model Configuration\n"
                 "  getsystemconfig\t\tGet the System Configuration\n"
                 "  setbrightness\t\t\tSets the brightness on the bulb in percent\n"
                 "  setrgbcolor\t\t\tSets the R G B color on the bulb\n"
@@ -181,6 +182,7 @@ bool WizControl::validateArgsUsage(const std::vector<std::string>& args)
 	case getdeviceinfo:
     case getwificonfig:
 	case getuserconfig:
+    case getmodelconfig:
 	case getsystemconfig:
         if (!showArgUsage)
             performWizRequest(cmd);
@@ -270,6 +272,7 @@ WizControl::WizControl()
         {"getdeviceinfo", getdeviceinfo},
         {"getwificonfig", getwificonfig},
         {"getuserconfig", getuserconfig},
+        {"getmodelconfig", getmodelconfig},
         {"getsystemconfig", getsystemconfig},
         {"setbrightness", setbrightness},
         {"setrgbcolor", setrgbcolor},
@@ -344,6 +347,10 @@ std::string WizControl::performWizRequest(const std::string& cmd)
 
         case getuserconfig:
             ret = m_bulb.getUserConfig();
+        break;
+
+        case getmodelconfig:
+            ret = m_bulb.getModelConfig();
         break;
 
         case getwificonfig:

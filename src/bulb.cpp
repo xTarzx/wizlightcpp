@@ -112,6 +112,17 @@ std::string Bulb::getUserConfig()
     return parseResponse(resp);
 }
 
+std::string Bulb::getModelConfig()
+{
+    json_t* root = json_object();
+    json_object_set_new(root, "method", json_string("getModelConfig"));
+
+    std::string msg = json_dumps(root, JSON_COMPACT);
+    LOG_D("Wiz getModelConfig request %s to Wiz", msg.c_str());
+    auto resp = m_sock.sendUDPCommand(msg, m_devIP, m_port, EMPTY_STRING);
+    return parseResponse(resp);
+}
+
 std::string Bulb::toggleLight(bool state)
 {
     json_t* root = json_object();

@@ -21,6 +21,7 @@ public:
     std::string getWifiConfig();
     std::string getSystemConfig();
     std::string getUserConfig();
+    std::string getModelConfig();
 
     /*Set APIs*/
     std::string reboot();
