@@ -69,6 +69,7 @@ Following features are supported now:
     Reboot
     Get User Configuration
     Get Wifi Configuration
+    Get Model Configuration
     Get System Configuration
     Set Brightness
     Set RGB Color
