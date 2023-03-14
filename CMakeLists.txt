@@ -19,9 +19,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # Jansson JSON library
 find_package(Jansson REQUIRED) 
-target_link_libraries(${PROJECT_NAME}
-    jansson
-)
+target_link_libraries(${PROJECT_NAME} ${Jansson_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${Jansson_INCLUDE_DIRS})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
