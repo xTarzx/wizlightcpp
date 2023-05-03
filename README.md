@@ -35,6 +35,7 @@ Use cmake tools to build the wizlightcpp. Run the following commands to build th
     mkdir build
     cd build
     cmake ..
+    make
     
 ### Cross Compilation
 In order to cross compile this module, use the cmake-tookchains file available in the [toolchain](cmake/toolchain) directory. Update the arm_toolchain.cmake file with your toolchain details. Refer the sample version in this [example](cmake/toolchain/example).
@@ -43,6 +44,7 @@ To cross-compile, run the following commands:
     mkdir build_arm
     cd build_arm
     cmake  -DCMAKE_TOOLCHAIN_FILE=<path_to_toolchain_cmake_file>/arm_toolchain.cmake ..
+    make
 
 ## Usage
 wizlightcpp supports both interactive and cli methods. 
