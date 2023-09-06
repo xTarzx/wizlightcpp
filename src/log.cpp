@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,60 +14,80 @@
  * KIND, either express or implied.
  *
  * @file log.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <sys/time.h>
 #include <unistd.h>
 #include <sstream>
-#include <sys/syscall.h>
 #include <iomanip>
 #include <stdarg.h>
 #include <stdio.h>
 #include "log.h"
-using namespace std;
 
-namespace L 
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#else
+#include <sys/syscall.h>
+#endif
+// using namespace std;
+using std::string;
+
+namespace L
 {
-    std::map<LEVEL,string> m_lmap {
-        {f, "FATAL"}, {e, "ERROR"}, {w, "WARN"}, {i, "INFO"}, {d, "DEBUG"}
-    };
+    std::map<LEVEL, string> m_lmap{
+        {f, "FATAL"}, {e, "ERROR"}, {w, "WARN"}, {i, "INFO"}, {d, "DEBUG"}};
     LEVEL g_level = L::i;
 
-    void setLogLevel(LEVEL level) {
+    void setLogLevel(LEVEL level)
+    {
         g_level = level;
     }
-    
-   string getCurrTime() {
+
+    string getCurrTime()
+    {
         struct timeval curTime;
         char tStamp[50] = {}, ms[5] = {};
         std::stringstream sstime;
-        
+
         gettimeofday(&curTime, NULL);
+#ifdef _WIN32
+        strftime(tStamp, sizeof(tStamp), "%Y-%m-%d %H:%M:%S", localtime((time_t *)&curTime.tv_sec));
+#else
         strftime(tStamp, sizeof(tStamp), "%F %T", localtime(&curTime.tv_sec));
-        snprintf(ms, 5, ".%03d", (int)curTime.tv_usec/1000);
-        sstime << tStamp << ms;        
+#endif
+        snprintf(ms, 5, ".%03d", (int)curTime.tv_usec / 1000);
+        sstime << tStamp << ms;
         return sstime.str();
     }
 
-   string getLogPrefix(LEVEL level) {
+    string getLogPrefix(LEVEL level)
+    {
         string lvl = m_lmap.at(level);
         string time = getCurrTime();
-	std::ostringstream ostrout;
+        std::ostringstream ostrout;
 
 #ifdef __GLIBC__
-	pid_t t_id = syscall(__NR_gettid);
-	ostrout << time << " " << program_invocation_short_name;
+        pid_t t_id = syscall(__NR_gettid);
+        ostrout << time << " " << program_invocation_short_name;
 #else
-	pid_t t_id = getpid();
-	ostrout << time << " " << getprogname();
+        pid_t t_id = getpid();
+#ifdef _WIN32
+        LPSTR path{};
+        GetModuleFileName(0, path, MAX_PATH);
+        ostrout << time << " " << path;
+#else
+        ostrout << time << " " << getprogname();
+#endif
 #endif
         ostrout << "(" << std::to_string(t_id) << ") ";
         ostrout << lvl.c_str() << "\t: ";
         return ostrout.str();
     }
 
-    void log(LEVEL lvl, const char *format, ...) {
+    void log(LEVEL lvl, const char *format, ...)
+    {
         if (lvl > g_level)
             return;
 
