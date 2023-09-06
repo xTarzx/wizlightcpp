@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,7 +14,7 @@
  * KIND, either express or implied.
  *
  * @file wizcontrol.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <stdio.h>
@@ -32,117 +32,125 @@
 #include "log.h"
 using namespace std;
 
-
 void printUsage()
 {
     std::cout << "\n"
-                "Usage: wizcontrol {Options} [Commands] {Args}\n"
-                "Options:\n"
-                "  --help\t\t\tShow the usage menu of this app\n"
-                "  --verbose\t\t\tEnable verbose logs\n"
-                << std::endl;
+                 "Usage: wizcontrol {Options} [Commands] {Args}\n"
+                 "Options:\n"
+                 "  --help\t\t\tShow the usage menu of this app\n"
+                 "  --verbose\t\t\tEnable verbose logs\n"
+              << std::endl;
 
     std::cout << "Commands:\n"
-                "  discover\t\t\tDiscover the Wiz bulb on the network\n"
-                "  off\t\t\t\tTurn Off Wiz bulb\n"
-                "  on\t\t\t\tTurn On Wiz bulb\n"
-                "  status\t\t\tGet the current status of Wiz bulb\n"
-                "  reboot\t\t\tReboot Wiz bulb\n"
-                "  getdeviceinfo\t\t\tGet the bulb information\n"
-                "  getwificonfig\t\t\tGet the Wifi Configuration\n"
-                "  getuserconfig\t\t\tGet the User Configuration\n"
-                "  getmodelconfig\t\t\tGet the Model Configuration\n"
-                "  getsystemconfig\t\tGet the System Configuration\n"
-                "  setbrightness\t\t\tSets the brightness on the bulb in percent\n"
-                "  setrgbcolor\t\t\tSets the R G B color on the bulb\n"
-                "  setspeed\t\t\tSets the color changing speed in percent\n"
-		        "  setcolortemp\t\t\tSets the color temperature in kelvins\n"
-                "  setscene\t\t\tSets the scene mode on the bulb\n"
-                << std::endl;
+                 "  discover\t\t\tDiscover the Wiz bulb on the network\n"
+                 "  off\t\t\t\tTurn Off Wiz bulb\n"
+                 "  on\t\t\t\tTurn On Wiz bulb\n"
+                 "  status\t\t\tGet the current status of Wiz bulb\n"
+                 "  reboot\t\t\tReboot Wiz bulb\n"
+                 "  getdeviceinfo\t\t\tGet the bulb information\n"
+                 "  getwificonfig\t\t\tGet the Wifi Configuration\n"
+                 "  getuserconfig\t\t\tGet the User Configuration\n"
+                 "  getmodelconfig\t\t\tGet the Model Configuration\n"
+                 "  getsystemconfig\t\tGet the System Configuration\n"
+                 "  setbrightness\t\t\tSets the brightness on the bulb in percent\n"
+                 "  setrgbcolor\t\t\tSets the R G B color on the bulb\n"
+                 "  setspeed\t\t\tSets the color changing speed in percent\n"
+                 "  setcolortemp\t\t\tSets the color temperature in kelvins\n"
+                 "  setscene\t\t\tSets the scene mode on the bulb\n"
+              << std::endl;
 }
 
 std::string WizControl::getSceneList()
 {
     std::stringstream sceneList;
     sceneList << "Available Scene modes:\n"
-                "  1\tOcean\n"
-                "  2\tRomance\n"
-                "  3\tSunset\n"
-                "  4\tParty\n"
-                "  5\tFireplace\n"
-                "  6\tCozy\n"
-                "  7\tForest\n"
-                "  8\tPastel Colors\n"
-                "  9\tWake up\n"
-                "  10\tBedtime\n"
-                "  11\tWarm White\n"
-                "  12\tDaylight\n"
-                "  13\tCool white\n"
-                "  14\tNight light\n"
-                "  15\tFocus\n"
-                "  16\tRelax\n"
-                "  17\tTrue colors\n"
-                "  18\tTV time\n"
-                "  19\tPlantgrowth\n"
-                "  20\tSpring\n"
-                "  21\tSummer\n"
-                "  22\tFall\n"
-                "  23\tDeepdive\n"
-                "  24\tJungle\n"
-                "  25\tMojito\n"
-                "  26\tClub\n"
-                "  27\tChristmas\n"
-                "  28\tHalloween\n"
-                "  29\tCandlelight\n"
-                "  30\tGolden white\n"
-                "  31\tPulse\n"
-                "  32\tSteampunk\n"
-                // "  1000\tRhythm\n"
-                << std::endl;
+                 "  1\tOcean\n"
+                 "  2\tRomance\n"
+                 "  3\tSunset\n"
+                 "  4\tParty\n"
+                 "  5\tFireplace\n"
+                 "  6\tCozy\n"
+                 "  7\tForest\n"
+                 "  8\tPastel Colors\n"
+                 "  9\tWake up\n"
+                 "  10\tBedtime\n"
+                 "  11\tWarm White\n"
+                 "  12\tDaylight\n"
+                 "  13\tCool white\n"
+                 "  14\tNight light\n"
+                 "  15\tFocus\n"
+                 "  16\tRelax\n"
+                 "  17\tTrue colors\n"
+                 "  18\tTV time\n"
+                 "  19\tPlantgrowth\n"
+                 "  20\tSpring\n"
+                 "  21\tSummer\n"
+                 "  22\tFall\n"
+                 "  23\tDeepdive\n"
+                 "  24\tJungle\n"
+                 "  25\tMojito\n"
+                 "  26\tClub\n"
+                 "  27\tChristmas\n"
+                 "  28\tHalloween\n"
+                 "  29\tCandlelight\n"
+                 "  30\tGolden white\n"
+                 "  31\tPulse\n"
+                 "  32\tSteampunk\n"
+              // "  1000\tRhythm\n"
+              << std::endl;
     return sceneList.str();
 }
 
-bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
-        const std::string& option, int& param)
+bool WizControl::checkArgOptions(const std::vector<std::string> &args, const std::string &cmd,
+                                 const std::string &option, int &param)
 {
     std::string strParam;
     auto ret = checkArgOptions(args, cmd, option, strParam);
-    try {
+    try
+    {
         param = std::stoi(strParam);
     }
-    catch (exception& e) {
+    catch (exception &e)
+    {
         LOG_D("Exception @ %s", e.what());
     }
     return ret;
 }
 
-bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
-    const std::string& option,  std::string& param)
+bool WizControl::checkArgOptions(const std::vector<std::string> &args, const std::string &cmd,
+                                 const std::string &option, std::string &param)
 {
     auto it = std::find(args.begin(), args.end(), option);
-    if (it != args.end()) {
-        if (std::next(it) != args.end()) {
+    if (it != args.end())
+    {
+        if (std::next(it) != args.end())
+        {
             param = *(std::next(it));
             return true;
         }
-        else {
+        else
+        {
             std::cerr << "Error: Missing required parameter for " << option << " option\n";
             return false;
         }
     }
-    else {
+    else
+    {
         std::cerr << "Unknown Option \n\n"
-            "Usage: wizlightcpp " << cmd << " {OPTIONS}\n"
-            "Try 'wizlightcpp " << cmd << " --help' for help."
-            << std::endl;
+                     "Usage: wizlightcpp "
+                  << cmd << " {OPTIONS}\n"
+                            "Try 'wizlightcpp "
+                  << cmd << " --help' for help."
+                  << std::endl;
         return false;
     }
     return true;
 }
 
-bool WizControl::validateArgsUsage(const std::vector<std::string>& args) 
+bool WizControl::validateArgsUsage(const std::vector<std::string> &args)
 {
-    if (args.empty() ||  g_cmdMap.find(args.at(0)) == g_cmdMap.end()) {
+    if (args.empty() || g_cmdMap.find(args.at(0)) == g_cmdMap.end())
+    {
         printUsage();
         return false;
     }
@@ -152,102 +160,114 @@ bool WizControl::validateArgsUsage(const std::vector<std::string>& args)
     std::vector<std::string> argUsageList;
     auto eCmd = g_cmdMap.at(cmd);
 
-    if (args.at(1) == "--help") {
+    if (args.at(1) == "--help")
+    {
         showArgUsage = true;
         if (eCmd != discover)
             argUsageList.emplace_back("--ip\t\t\tIP address of the bulb.\n");
         argUsageList.emplace_back("--help\t\t\tShow this message and exit.\n");
     }
-    else {
+    else
+    {
         if (eCmd != discover && !checkArgOptions(args, cmd, "--ip", ipAddr))
             return false;
         m_bulb.setDeviceIP(ipAddr);
     }
-    
+
     switch (eCmd)
-    {		
+    {
     case discover:
         if (showArgUsage)
             argUsageList.emplace_back("--bcast\t\t\tBroadcast IP Address [eg: 192.168.1.255].\n");
-        else {
+        else
+        {
             std::string bCastIp;
             if (checkArgOptions(args, cmd, "--bcast", bCastIp))
                 ret = m_bulb.discover(bCastIp);
         }
-	break;
-	case on:
-	case off:
-	case status:
-	case reboot:
-	case getdeviceinfo:
+        break;
+    case on:
+    case off:
+    case status:
+    case reboot:
+    case getdeviceinfo:
     case getwificonfig:
-	case getuserconfig:
+    case getuserconfig:
     case getmodelconfig:
-	case getsystemconfig:
+    case getsystemconfig:
         if (!showArgUsage)
             performWizRequest(cmd);
-    break;
-	case setbrightness:
+        break;
+    case setbrightness:
         if (showArgUsage)
             argUsageList.emplace_back("--dim\t\t\tBrightness level in percent [0 to 100].\n");
-        else {
+        else
+        {
             int dimlevel;
             if (checkArgOptions(args, cmd, "--dim", dimlevel))
                 ret = m_bulb.setBrightness(dimlevel);
         }
-    break;
-	case setrgbcolor:
-        if (showArgUsage) {
+        break;
+    case setrgbcolor:
+        if (showArgUsage)
+        {
             argUsageList.emplace_back("--r\t\t\tRed color range [0 to 255].\n");
             argUsageList.emplace_back("--g\t\t\tGreen color range [0 to 255].\n");
             argUsageList.emplace_back("--b\t\t\tBlue color range [0 to 255].\n");
         }
-        else {
+        else
+        {
             int r, g, b;
             if (checkArgOptions(args, cmd, "--r", r) && checkArgOptions(args, cmd, "--g", g) && checkArgOptions(args, cmd, "--b", b))
                 ret = m_bulb.setRGBColor(r, g, b);
         }
-    break;
-	case setspeed:
+        break;
+    case setspeed:
         if (showArgUsage)
             argUsageList.emplace_back("--speed\t\t\tColor changing speed in percent [0 to 100].\n");
-        else {
+        else
+        {
             int speed;
             if (checkArgOptions(args, cmd, "--speed", speed))
                 ret = m_bulb.setSpeed(speed);
         }
 
-    break;
-	case setcolortemp:
+        break;
+    case setcolortemp:
         if (showArgUsage)
             argUsageList.emplace_back("--temp\t\t\tColor temperature in kelvins [1000 to 8000].\n");
-        else {
+        else
+        {
             int temp;
             if (checkArgOptions(args, cmd, "--temp", temp))
                 ret = m_bulb.setColorTemp(temp);
         }
-    break;
-	case setscene:
-        if (showArgUsage) {
+        break;
+    case setscene:
+        if (showArgUsage)
+        {
             argUsageList.emplace_back("--scene\t\t\tScene mode [1 to 32].\n");
             argUsageList.emplace_back(getSceneList());
         }
-        else {
+        else
+        {
             int scene;
             if (checkArgOptions(args, cmd, "--scene", scene))
                 ret = m_bulb.setScene(scene);
         }
-    break;
+        break;
 
-	default:
+    default:
         printUsage();
-	return false;
+        return false;
     }
 
-    if (showArgUsage) {
-        std::cout << "Usage: wizlightcpp "<< cmd << " {OPTIONS}\n\n"
-                "Options:" << std::endl;
-        for (auto& it : argUsageList)
+    if (showArgUsage)
+    {
+        std::cout << "Usage: wizlightcpp " << cmd << " {OPTIONS}\n\n"
+                                                     "Options:"
+                  << std::endl;
+        for (auto &it : argUsageList)
             std::cout << it;
         return false;
     }
@@ -256,12 +276,13 @@ bool WizControl::validateArgsUsage(const std::vector<std::string>& args)
     return true;
 }
 
-WizControl& WizControl::getInstance() {
+WizControl &WizControl::getInstance()
+{
     static WizControl instance;
     return instance;
 }
 
-WizControl::WizControl() 
+WizControl::WizControl()
 {
     g_cmdMap = {
         {"discover", discover},
@@ -278,14 +299,15 @@ WizControl::WizControl()
         {"setrgbcolor", setrgbcolor},
         {"setspeed", setspeed},
         {"setcolortemp", setcolortemp},
-        {"setscene", setscene}
-    };
+        {"setscene", setscene}};
 }
 
-WizControl::~WizControl() {
+WizControl::~WizControl()
+{
 }
 
-bool WizControl::isCmdSupported(const std::string& cmd) {
+bool WizControl::isCmdSupported(const std::string &cmd)
+{
     auto it = g_cmdMap.find(cmd);
 
     if (it != g_cmdMap.end())
@@ -294,18 +316,21 @@ bool WizControl::isCmdSupported(const std::string& cmd) {
         return false;
 }
 
-std::string WizControl::performWizRequest(const std::string& cmd)
+std::string WizControl::performWizRequest(const std::string &cmd)
 {
     std::string ret;
-    if (g_cmdMap.find(cmd) == g_cmdMap.end()) {
+    if (g_cmdMap.find(cmd) == g_cmdMap.end())
+    {
         printUsage();
         return ret;
     }
     auto eCmd = g_cmdMap.at(cmd);
 
-    if (eCmd != discover && m_bulb.getDeviceIp().empty()) {
+    if (eCmd != discover && m_bulb.getDeviceIp().empty())
+    {
         std::string ip;
-        while (1) {
+        while (1)
+        {
             cout << "Enter the bulb IP address: ";
             getline(cin, ip);
             if (ip.empty())
@@ -316,127 +341,133 @@ std::string WizControl::performWizRequest(const std::string& cmd)
         m_bulb.setDeviceIP(ip);
     }
 
-    switch (eCmd) {
-        case discover:
-        {
-            std::string bcastIp;
-            cout << "Enter the broadcast IP Address: ";
-            cin >> bcastIp;
-            ret = m_bulb.discover(bcastIp);
-        }
-        break;
-        case on:
-            ret = m_bulb.toggleLight(true);
-        break;
-
-        case off:
-            ret = m_bulb.toggleLight(false);
+    switch (eCmd)
+    {
+    case discover:
+    {
+        std::string bcastIp;
+        cout << "Enter the broadcast IP Address: ";
+        cin >> bcastIp;
+        ret = m_bulb.discover(bcastIp);
+    }
+    break;
+    case on:
+        ret = m_bulb.toggleLight(true);
         break;
 
-        case status:
-            ret = m_bulb.getStatus();
+    case off:
+        ret = m_bulb.toggleLight(false);
         break;
 
-        case reboot:
-            ret = m_bulb.reboot();
+    case status:
+        ret = m_bulb.getStatus();
         break;
 
-        case getdeviceinfo:
-            ret = m_bulb.getDeviceInfo();
+    case reboot:
+        ret = m_bulb.reboot();
         break;
 
-        case getuserconfig:
-            ret = m_bulb.getUserConfig();
+    case getdeviceinfo:
+        ret = m_bulb.getDeviceInfo();
         break;
 
-        case getmodelconfig:
-            ret = m_bulb.getModelConfig();
+    case getuserconfig:
+        ret = m_bulb.getUserConfig();
         break;
 
-        case getwificonfig:
-            ret = m_bulb.getWifiConfig();
+    case getmodelconfig:
+        ret = m_bulb.getModelConfig();
         break;
 
-        case getsystemconfig:
-            ret = m_bulb.getSystemConfig();
+    case getwificonfig:
+        ret = m_bulb.getWifiConfig();
         break;
 
-	case setbrightness:
-            ushort level;
-            cout << "Enter the brightness level [0 to 100]:";
-            cin >> level;
-            ret = m_bulb.setBrightness(level);
+    case getsystemconfig:
+        ret = m_bulb.getSystemConfig();
         break;
 
-        case setrgbcolor:
-            ushort r, g, b;
-            cout << "Enter the Red color range [0 to 255]:";
-            cin >> r;
-            cout << "Enter the Green color range [0 to 255]:";
-            cin >> g;
-            cout << "Enter the Blue color range [0 to 255]:";
-            cin >> b;
-            ret = m_bulb.setRGBColor(r, g, b);
+    case setbrightness:
+        ushort level;
+        cout << "Enter the brightness level [0 to 100]:";
+        cin >> level;
+        ret = m_bulb.setBrightness(level);
         break;
 
-        case setspeed:
-            ushort speed;
-            cout << "Enter the color changing speed in percent [0 to 100]:";
-            cin >> speed;
-            ret = m_bulb.setSpeed(speed);
+    case setrgbcolor:
+        ushort r, g, b;
+        cout << "Enter the Red color range [0 to 255]:";
+        cin >> r;
+        cout << "Enter the Green color range [0 to 255]:";
+        cin >> g;
+        cout << "Enter the Blue color range [0 to 255]:";
+        cin >> b;
+        ret = m_bulb.setRGBColor(r, g, b);
         break;
 
-        case setcolortemp:
-            ushort color;
-            cout << "Enter the color temperature in kelvins [1000 to 8000]:";
-            cin >> color;
-            ret = m_bulb.setColorTemp(color);
+    case setspeed:
+        ushort speed;
+        cout << "Enter the color changing speed in percent [0 to 100]:";
+        cin >> speed;
+        ret = m_bulb.setSpeed(speed);
         break;
 
-        case setscene:
-            ushort scene;
-            cout << getSceneList();
-            cout << "Enter the scene mode [1 to 32]:";
-            cin >> scene;
-            ret = m_bulb.setScene(scene);
+    case setcolortemp:
+        ushort color;
+        cout << "Enter the color temperature in kelvins [1000 to 8000]:";
+        cin >> color;
+        ret = m_bulb.setColorTemp(color);
         break;
 
-        default:
+    case setscene:
+        ushort scene;
+        cout << getSceneList();
+        cout << "Enter the scene mode [1 to 32]:";
+        cin >> scene;
+        ret = m_bulb.setScene(scene);
+        break;
+
+    default:
         break;
     }
     if (!ret.empty())
         cout << ret << endl;
 
-    return ret; 
+    return ret;
 }
 
 int main(int argc, char *argv[])
 {
-    WizControl& wiz = WizControl::getInstance();
-    if (argc == 1) {
+    WizControl &wiz = WizControl::getInstance();
+    if (argc == 1)
+    {
         printUsage();
         return 0;
     }
 
     std::vector<std::string> args;
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++)
+    {
         args.emplace_back(argv[i]);
     }
 
     auto hIt = std::find(args.begin(), args.end(), "--help");
-    if ((hIt != args.end()) && (hIt == args.begin())) {
+    if ((hIt != args.end()) && (hIt == args.begin()))
+    {
         printUsage();
         return 0;
     }
 
     auto vIt = std::find(args.begin(), args.end(), "--verbose");
-    if (vIt != args.end()) {
+    if (vIt != args.end())
+    {
         L::setLogLevel(L::d);
         LOG_D("Verbose log enabled");
         args.erase(vIt);
     }
 
-    if (!wiz.isCmdSupported(args.at(0))) {
+    if (!wiz.isCmdSupported(args.at(0)))
+    {
         printUsage();
         return 0;
     }
@@ -445,4 +476,4 @@ int main(int argc, char *argv[])
         wiz.performWizRequest(args.at(0));
     else
         wiz.validateArgsUsage(args);
-}   
+}
