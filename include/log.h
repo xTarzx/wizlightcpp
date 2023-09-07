@@ -4,7 +4,7 @@
 #include <iostream>
 #include <map>
 using namespace std;
-
+    
 #define LOG_F(...)              L::log(L::f, ##__VA_ARGS__)
 #define LOG_E(...)              L::log(L::e, ##__VA_ARGS__)
 #define LOG_W(...)              L::log(L::w, ##__VA_ARGS__)

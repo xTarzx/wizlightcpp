@@ -22,6 +22,12 @@ find_package(Jansson REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${Jansson_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${Jansson_INCLUDE_DIRS})
 
+
+if (WIN32)
+target_link_libraries(${PROJECT_NAME} ws2_32)
+endif()
+
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
