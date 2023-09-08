@@ -1,7 +1,7 @@
 # wizlightcpp
 
 ## Project Overview
-A native application to manage and control the [Wiz](https://www.wizconnected.com/en-us) light devices. This project is developed using native C/C++ language so that it can be ported to any environment. 
+A native application to manage and control the [Wiz](https://www.wizconnected.com/en-us) light devices. This project is developed using native C/C++ language so that it can be ported to any environment.
 
 ## About Wiz
 WiZ is an IoT platform for smart lighting solutions and smart services. WiZ delivers a Wi-Fi-based smart system that controls plug & play devices with our user-friendly and feature-rich app, and that connects to existing Wi-Fi networks. It also provides ways to dynamic change the light color. [Source](https://www.wizconnected.com/en-us/about-wiz)
@@ -23,12 +23,12 @@ wizlightcpp should work with any Linux distribution and added cross compilation 
         X86_64
         Arm
         macOS
-        
+
 ### Checking out the wizlightcpp
 To check out the wizlightcpp repository:
 
     git clone https://github.com/srisham/wizlightcpp.git
-    
+
 ### Build
 Use cmake tools to build the wizlightcpp. Run the following commands to build the app:
 
@@ -36,7 +36,7 @@ Use cmake tools to build the wizlightcpp. Run the following commands to build th
     cd build
     cmake ..
     make
-    
+
 ### Cross Compilation
 In order to cross compile this module, use the cmake-tookchains file available in the [toolchain](cmake/toolchain) directory. Update the arm_toolchain.cmake file with your toolchain details. Refer the sample version in this [example](cmake/toolchain/example).
 To cross-compile, run the following commands:
@@ -47,13 +47,13 @@ To cross-compile, run the following commands:
     make
 
 ## Usage
-wizlightcpp supports both interactive and cli methods. 
-    
+wizlightcpp supports both interactive and cli methods.
+
 If only 'command' passed as input parameter, it will enable the app in interactive mode. User can enter the command specific inputs to customize the bulb.
 
     $ wizlightcpp on
-    
-In cli mode, user can all pass necessary 'options' as arguments in one go. 
+
+In cli mode, user can all pass necessary 'options' as arguments in one go.
 
     $ wizlightcpp setbrightness --ip 192.168.20.105 --dim 50
 
@@ -79,5 +79,3 @@ Following features are supported now:
     Set Speed
     Set SceneId
 
-## Future Improvements
-    Windows Support

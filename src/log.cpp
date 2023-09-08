@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,7 +14,7 @@
  * KIND, either express or implied.
  *
  * @file log.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <sys/time.h>
@@ -31,16 +31,11 @@
 #include <sys/syscall.h>
 #endif
 
-
-
 #include "log.h"
-
-
-
 
 using namespace std;
 
-namespace L 
+namespace L
 {
     std::map<LEVEL,string> m_lmap {
         {f, "FATAL"}, {e, "ERROR"}, {w, "WARN"}, {i, "INFO"}, {d, "DEBUG"}
@@ -50,12 +45,12 @@ namespace L
     void setLogLevel(LEVEL level) {
         g_level = level;
     }
-    
+
    string getCurrTime() {
         struct timeval curTime;
         char tStamp[50] = {}, ms[5] = {};
         std::stringstream sstime;
-        
+
         gettimeofday(&curTime, NULL);
 
         #ifdef _WIN32
@@ -64,7 +59,7 @@ namespace L
         strftime(tStamp, sizeof(tStamp), "%F %T", localtime(&curTime.tv_sec));
         #endif
         snprintf(ms, 5, ".%03d", (int)curTime.tv_usec/1000);
-        sstime << tStamp << ms;        
+        sstime << tStamp << ms;
         return sstime.str();
     }
 
