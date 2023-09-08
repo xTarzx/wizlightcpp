@@ -1,5 +1,9 @@
 #include <iostream>
 
+#ifdef _WIN32
+typedef uint16_t u_int16_t;
+#endif
+
 class UDPSocket
 {
 

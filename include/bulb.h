@@ -4,6 +4,10 @@
 #include <map>
 #include "udp.h"
 
+#ifdef _WIN32
+typedef unsigned short ushort;
+#endif
+
 class Bulb
 {
 

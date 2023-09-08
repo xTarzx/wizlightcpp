@@ -21,6 +21,7 @@
 #include "bulb.h"
 #include "log.h"
 
+
 const int UDP_WIZ_BROADCAST_BULB_PORT           = 38899;
 const std::string ERROR_INVALID_REQUEST         = "Invalid_Request";
 std::string EMPTY_STRING;

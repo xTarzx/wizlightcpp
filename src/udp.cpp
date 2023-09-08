@@ -17,12 +17,20 @@
  * 
  ***************************************************************************/
 
-#include <sys/socket.h>
-#include <arpa/inet.h>
 #include <sys/types.h>
 #include <string.h>
-#include <netinet/in.h>
 #include <unistd.h>
+
+#ifdef _WIN32
+    #include <ws2tcpip.h>
+    #include <winsock.h>
+#else
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <netinet/in.h>
+#endif
+
+
 #include "udp.h"
 #include "log.h"
 
@@ -41,13 +49,28 @@ UDPSocket::~UDPSocket()
 
 bool UDPSocket::initializeUDPSocket() {
 
+    #ifdef _WIN32
+        WSADATA wsa;
+        if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+        {
+            LOG_E("WSAStartup failed : %d", WSAGetLastError());
+            return false;
+        }
+    #endif
+
     if ((m_bCastSock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) {
         LOG_E("UDP broadcast socket creation failed");
         return false;
     }
 
     int broadcastPermission = 1;
-    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_BROADCAST, (void *) &broadcastPermission,sizeof(broadcastPermission)) < 0){
+
+    #ifdef _WIN32
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_BROADCAST, (char *) &broadcastPermission,sizeof(broadcastPermission)) < 0)
+    #else
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_BROADCAST, (void *) &broadcastPermission,sizeof(broadcastPermission)) < 0)
+    #endif
+    {
         LOG_E("UDP broadcast socket setsockopt SO_BROADCAST error %s", strerror(errno));
         return false;
     }
@@ -55,7 +78,12 @@ bool UDPSocket::initializeUDPSocket() {
     struct timeval tv;
     tv.tv_sec = UDP_REQ_TIMEOUT;
     tv.tv_usec = 0;
-    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
+    #ifdef _WIN32
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, (char *) &tv, sizeof(tv)) < 0) 
+    #else
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) 
+    #endif
+    {
         LOG_E("UDP broadcast socket setsockopt SO_RCVTIMEO error %s", strerror(errno));
         return false;
     }

@@ -20,11 +20,24 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <sstream>
-#include <sys/syscall.h>
 #include <iomanip>
 #include <stdarg.h>
 #include <stdio.h>
+
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#else
+#include <sys/syscall.h>
+#endif
+
+
+
 #include "log.h"
+
+
+
+
 using namespace std;
 
 namespace L 
@@ -44,7 +57,12 @@ namespace L
         std::stringstream sstime;
         
         gettimeofday(&curTime, NULL);
+
+        #ifdef _WIN32
+        strftime(tStamp, sizeof(tStamp), "%Y-%m-%d %H:%M:%S", localtime((time_t*)&curTime.tv_sec));
+        #else
         strftime(tStamp, sizeof(tStamp), "%F %T", localtime(&curTime.tv_sec));
+        #endif
         snprintf(ms, 5, ".%03d", (int)curTime.tv_usec/1000);
         sstime << tStamp << ms;        
         return sstime.str();
@@ -60,7 +78,15 @@ namespace L
 	ostrout << time << " " << program_invocation_short_name;
 #else
 	pid_t t_id = getpid();
+
+    #ifdef _WIN32
+        LPSTR path{};
+        GetModuleFileName(0, path, MAX_PATH);
+        ostrout << time << " " << path;
+    #else
+
 	ostrout << time << " " << getprogname();
+    #endif
 #endif
         ostrout << "(" << std::to_string(t_id) << ") ";
         ostrout << lvl.c_str() << "\t: ";
