@@ -115,8 +115,12 @@ std::string UDPSocket::sendUDPCommand(const std::string &msg, const std::string 
 
     socklen_t len = sizeof(ipAddr);
     char resp[MAXLINE] = {};
-    int n = recvfrom(m_bCastSock, (char *)resp, MAXLINE, MSG_WAITALL, (struct sockaddr *)&ipAddr, &len);
 
+#ifdef _WIN32
+    int n = recvfrom(m_bCastSock, resp, MAXLINE, 0, (struct sockaddr *)&ipAddr, &len);
+#else
+    int n = recvfrom(m_bCastSock, (char *)resp, MAXLINE, MSG_WAITALL, (struct sockaddr *)&ipAddr, &len);
+#endif
     if (n < 0)
     {
         LOG_E("device response timedout error %s", strerror(errno));
