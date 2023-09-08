@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,7 +14,7 @@
  * KIND, either express or implied.
  *
  * @file udp.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <sys/types.h>
@@ -30,9 +30,9 @@
     #include <netinet/in.h>
 #endif
 
-
 #include "udp.h"
 #include "log.h"
+
 
 const int UDP_REQ_TIMEOUT       = 2;
 const int MAXLINE               = 4096;
@@ -79,9 +79,9 @@ bool UDPSocket::initializeUDPSocket() {
     tv.tv_sec = UDP_REQ_TIMEOUT;
     tv.tv_usec = 0;
     #ifdef _WIN32
-    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, (char *) &tv, sizeof(tv)) < 0) 
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, (char *) &tv, sizeof(tv)) < 0)
     #else
-    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) 
+    if (setsockopt(m_bCastSock, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0)
     #endif
     {
         LOG_E("UDP broadcast socket setsockopt SO_RCVTIMEO error %s", strerror(errno));
@@ -92,20 +92,20 @@ bool UDPSocket::initializeUDPSocket() {
     return true;
 }
 
-std::string UDPSocket::sendUDPCommand(const std::string& msg, const std::string& targetIp, 
+std::string UDPSocket::sendUDPCommand(const std::string& msg, const std::string& targetIp,
     const u_int16_t port, std::string& broadcastIP) {
-    
+
     if (m_bCastSock < 0) {
         initializeUDPSocket();
     }
 
     LOG_D("sendUDPCommand socket ipAddr %s cmd %s", targetIp.c_str(), msg.c_str());
 
-    struct sockaddr_in ipAddr; 
-    memset(&ipAddr, 0, sizeof(ipAddr));   
-    ipAddr.sin_family = AF_INET;                 
+    struct sockaddr_in ipAddr;
+    memset(&ipAddr, 0, sizeof(ipAddr));
+    ipAddr.sin_family = AF_INET;
     ipAddr.sin_addr.s_addr = inet_addr(targetIp.c_str());
-    ipAddr.sin_port = htons(port); 
+    ipAddr.sin_port = htons(port);
     int msgLen = strlen(msg.c_str());
 
     if (sendto(m_bCastSock, msg.c_str(), msgLen, 0, (struct sockaddr *)&ipAddr, sizeof(ipAddr)) != msgLen){
@@ -115,14 +115,14 @@ std::string UDPSocket::sendUDPCommand(const std::string& msg, const std::string&
 
     socklen_t len = sizeof(ipAddr);
     char resp[MAXLINE] = {};
-    int n = recvfrom(m_bCastSock, (char *)resp, MAXLINE, MSG_WAITALL, (struct sockaddr *) &ipAddr, &len); 
+    int n = recvfrom(m_bCastSock, (char *)resp, MAXLINE, MSG_WAITALL, (struct sockaddr *) &ipAddr, &len);
 
     if (n < 0) {
         LOG_E("device response timedout error %s", strerror(errno));
         return resp;
     }
 
-    resp[n] = '\0'; 
+    resp[n] = '\0';
     LOG_D("sendUDPCommand device response: %s", resp);
 
     if (!broadcastIP.empty()) {
@@ -130,7 +130,7 @@ std::string UDPSocket::sendUDPCommand(const std::string& msg, const std::string&
         inet_ntop(AF_INET, &(ipAddr.sin_addr), str, INET_ADDRSTRLEN);
         broadcastIP = str;
         LOG_D("sendUDPCommand broadcastIP: %s", broadcastIP.c_str());
-    } 
+    }
     return resp;
 }
 

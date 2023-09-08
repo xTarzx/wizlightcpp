@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,13 +14,12 @@
  * KIND, either express or implied.
  *
  * @file bulb.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <jansson.h>
 #include "bulb.h"
 #include "log.h"
-
 
 const int UDP_WIZ_BROADCAST_BULB_PORT           = 38899;
 const std::string ERROR_INVALID_REQUEST         = "Invalid_Request";
@@ -42,7 +41,7 @@ void Bulb::setDeviceIP(const std::string& ip)
     m_devIP = ip;
 }
 
-std::string Bulb::getDeviceIp() 
+std::string Bulb::getDeviceIp()
 {
     return m_devIP;
 }
@@ -195,7 +194,7 @@ std::string Bulb::setRGBColor(ushort r, ushort g, ushort b)
 
 std::string Bulb::setSpeed(int speed)
 {
-    if (speed < 0 || speed > 100) 
+    if (speed < 0 || speed > 100)
         return ERROR_INVALID_REQUEST;
 
     json_t* root = json_object();
@@ -232,7 +231,7 @@ std::string Bulb::setColorTemp(int temp)
 }
 
 /* Scenes from 1 to 32 are supported*/
-std::string Bulb::setScene(ushort scene) 
+std::string Bulb::setScene(ushort scene)
 {
     if (scene < 1 || scene > 32)
         return ERROR_INVALID_REQUEST;
@@ -255,7 +254,7 @@ std::string Bulb::parseResponse(std::string jsonStr, std::string addlParams) {
 
     if (jsonStr.empty())
         return jsonStr;
-    
+
     json_t* root = json_object();
     json_error_t error;
     json_t *data = json_loads(jsonStr.c_str(), 0, &error);
@@ -287,7 +286,7 @@ std::string Bulb::parseResponse(std::string jsonStr, std::string addlParams) {
     json_object_del(dataObj, "id");
     json_object_del(dataObj, "env");
 
-    if (!addlParams.empty()) 
+    if (!addlParams.empty())
         json_object_set_new(dataObj, "ip", json_string(addlParams.c_str()));
 
     json_object_set_new(root, "bulb_response", dataObj);

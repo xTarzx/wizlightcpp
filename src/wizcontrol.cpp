@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Project                WIZLIGHTCPP     
+ *  Project                WIZLIGHTCPP
  *
  * Copyright (C) 2022 , Sri Balaji S.
  *
@@ -14,7 +14,7 @@
  * KIND, either express or implied.
  *
  * @file wizcontrol.cpp
- * 
+ *
  ***************************************************************************/
 
 #include <stdio.h>
@@ -102,7 +102,7 @@ std::string WizControl::getSceneList()
     return sceneList.str();
 }
 
-bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
+bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd,
         const std::string& option, int& param)
 {
     std::string strParam;
@@ -116,7 +116,7 @@ bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std
     return ret;
 }
 
-bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
+bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std::string& cmd,
     const std::string& option,  std::string& param)
 {
     auto it = std::find(args.begin(), args.end(), option);
@@ -140,7 +140,7 @@ bool WizControl::checkArgOptions(const std::vector<std::string>& args, const std
     return true;
 }
 
-bool WizControl::validateArgsUsage(const std::vector<std::string>& args) 
+bool WizControl::validateArgsUsage(const std::vector<std::string>& args)
 {
     if (args.empty() ||  g_cmdMap.find(args.at(0)) == g_cmdMap.end()) {
         printUsage();
@@ -163,9 +163,9 @@ bool WizControl::validateArgsUsage(const std::vector<std::string>& args)
             return false;
         m_bulb.setDeviceIP(ipAddr);
     }
-    
+
     switch (eCmd)
-    {		
+    {
     case discover:
         if (showArgUsage)
             argUsageList.emplace_back("--bcast\t\t\tBroadcast IP Address [eg: 192.168.1.255].\n");
@@ -261,7 +261,7 @@ WizControl& WizControl::getInstance() {
     return instance;
 }
 
-WizControl::WizControl() 
+WizControl::WizControl()
 {
     g_cmdMap = {
         {"discover", discover},
@@ -407,7 +407,7 @@ std::string WizControl::performWizRequest(const std::string& cmd)
     if (!ret.empty())
         cout << ret << endl;
 
-    return ret; 
+    return ret;
 }
 
 int main(int argc, char *argv[])
@@ -445,4 +445,4 @@ int main(int argc, char *argv[])
         wiz.performWizRequest(args.at(0));
     else
         wiz.validateArgsUsage(args);
-}   
+}

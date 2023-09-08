@@ -38,7 +38,7 @@ public:
 
 private:
     std::string parseResponse(std::string, std::string addlParams = "");
-    
+
     std::string m_devIP;
     u_int16_t m_port;
     std::map<std::string, std::string> m_paramMap;

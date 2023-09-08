@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+
 #include "bulb.h"
 
 
@@ -15,9 +16,9 @@ public:
 
 private:
     std::string getSceneList();
-    bool checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
+    bool checkArgOptions(const std::vector<std::string>& args, const std::string& cmd,
         const std::string& option, std::string& param);
-    bool checkArgOptions(const std::vector<std::string>& args, const std::string& cmd, 
+    bool checkArgOptions(const std::vector<std::string>& args, const std::string& cmd,
         const std::string& option, int& param);
 
     WizControl();
